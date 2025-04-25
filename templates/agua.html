@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Água Diária</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Calculadora de Água Diária</h1>
+            <p class="subtitle">Recomendação: 35 ml por kg de peso corporal</p>
+        </div>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="peso">Seu peso (kg):</label>
+                <input type="number" id="peso" name="peso" 
+                       step="0.1" min="1" required
+                       placeholder="Ex: 65, 72.5, etc.">
+            </div>
+            
+            <button type="submit" class="btn-calcular">Calcular</button>
+        </form>
+        
+        {% if erro %}
+            <div class="alert erro">
+                {{ erro }}
+            </div>
+        {% endif %}
+        
+        {% if agua_litros is defined %}
+            <div class="resultado">
+                <div class="water-icon">💧</div>
+                <h2>Resultado</h2>
+                <p>Para <span class="destaque">{{ peso }} kg</span>, você precisa beber:</p>
+                <p class="quantidade-agua">{{ "%.2f"|format(agua_litros) }} litros</p>
+                <p class="equivalente">({{ "%.0f"|format(agua_ml) }} ml por dia)</p>
+                
+                <div class="dicas">
+                    <h3>Dicas para hidratação:</h3>
+                    <ul>
+                        <li>Beba água ao acordar</li>
+                        <li>Tenha uma garrafa sempre à mão</li>
+                        <li>Observe a cor da sua urina</li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
